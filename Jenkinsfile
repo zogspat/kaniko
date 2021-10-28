@@ -5,28 +5,13 @@ pipeline {
         }
   }
   stages {
-    stage('Build image')
+    stage('Build and push')
     {
       steps
-      {
-        echo 'Maybe... starting the build'
-        echo 'Running number ${env.BUILD_ID} on ${env.JENKINS_URL}'
-        script
+{
+        withKubeConfig(credentialsId: 'kubeconfig')
         {
-          myapp = docker.build("zogspat/nodewpapiclient:latest")
-        }
-      }
-    }
-    stage('Push image')
-    {
-      steps
-      {
-        script
-        {
-          docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
-          {
-            myapp.push("latest")
-          }
+          sh "kubectl apply -f kanikoBuildPod.yaml"
         }
       }
     }
