@@ -1,9 +1,16 @@
 pipeline {
+  agent 
+  {
+     agent 
+     {
+        label 'master'
+     }
+  }
   stages {
     stage('Build and push')
     {
       steps
-{
+      {
         withKubeConfig(credentialsId: 'kubeconfig')
         {
           sh "kubectl apply -f kanikoBuildPod.yaml"
