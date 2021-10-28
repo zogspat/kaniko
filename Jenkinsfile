@@ -1,10 +1,7 @@
 pipeline {
   agent 
   {
-     agent 
-     {
-        label 'master'
-     }
+    label 'master'
   }
   stages {
     stage('Build and push')
