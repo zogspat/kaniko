@@ -14,6 +14,8 @@ pipeline {
         }
       }
     }
+    // Not working: this next stage executes immediately the shell command returns which is
+    // long before the Kaniko build has pushed the image to Docker Hub...
     stage('Deploy app to kubernetes')
     {
       steps
